@@ -668,3 +668,13 @@ body {
 .hover\:border-\[\#F97316\]:hover { border-color: #F97316 !important; }
 
 .text-\[\#EA580C\] { color: #EA580C !important; }
+
+/* ===== TEXT SELECTION HIGHLIGHT ===== */
+::selection {
+    background-color: #F97316 !important; /* SIH Orange */
+    color: #ffffff !important;
+}
+::-moz-selection {
+    background-color: #F97316 !important;
+    color: #ffffff !important;
+}
