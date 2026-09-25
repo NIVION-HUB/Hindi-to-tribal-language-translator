@@ -1,0 +1,964 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhasha Setu | SIH26042 - Jharkhand PALASH Framework</title>
+
+  <!-- Tailwind CSS: pre-built locally (see css/tailwind.css) -- no CDN, works fully offline -->
+  <link rel="stylesheet" href="css/tailwind.css">
+
+
+  <!-- Fonts: self-hosted locally (see css/fonts-local.css) -- no Google Fonts CDN, works fully offline -->
+  <link rel="stylesheet" href="css/fonts-local.css">
+
+  <!-- Lucide Icons (vendored locally) -->
+  <script src="js/vendor/lucide.js"></script>
+
+  <!-- pdf.js (extract text from uploaded PDFs) & jsPDF (generate translated PDFs) -- vendored locally -->
+  <script src="js/vendor/pdf.min.js"></script>
+  <script src="js/vendor/jspdf.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#FAFAFA] text-[#1A2421] min-h-screen flex flex-col font-sans antialiased selection:bg-[#F97316] selection:text-white">
+
+  <!-- Top Tribal Motif Ribbon -->
+  <div class="w-full h-2 tribal-pattern-stripe"></div>
+
+  <!-- TTS / Voice Warning Toast (shown only if the browser has no matching voice) -->
+  <div id="ttsWarningToast" class="hidden fixed bottom-4 right-4 z-50 max-w-sm bg-orange-50 border border-orange-300 text-orange-900 text-xs font-semibold px-4 py-3 rounded-2xl shadow-lg flex items-start gap-2 fade-scale-in">
+    <i data-lucide="volume-x" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>
+    <span id="ttsWarningText">—</span>
+  </div>
+
+  <!-- Offline Mode Alert Banner (Toggled ON via Offline Switch) -->
+  <div id="offlineBanner" class="hidden animate-slide-down bg-orange-500 text-orange-950 px-4 py-2.5 shadow-md border-b border-orange-600 transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-xs md:text-sm font-semibold">
+      <div class="flex items-center space-x-2">
+        <i data-lucide="hard-drive-download" class="w-4 h-4 text-orange-950 flex-shrink-0 animate-bounce"></i>
+        <span>Offline Mode Active: Serving pre-cached PALASH lesson units locally via Edge Storage</span>
+      </div>
+      <div class="flex items-center space-x-3 text-xs">
+        <span class="hidden md:inline-block px-2 py-0.5 rounded bg-orange-600/30 border border-orange-700/20 text-orange-900">
+          Latency: &lt; 4ms (Local Edge)
+        </span>
+        <span class="font-mono text-[11px] bg-white/70 px-2 py-0.5 rounded text-orange-900">
+          4 Units Cached
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="bg-white/90 backdrop-blur-md border-b border-[#1B1F5E]/10 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand & Project Identity -->
+      <div class="flex items-center space-x-3">
+        <!-- Logo Emblem -->
+        <div class="logo-emblem-anim w-11 h-11 rounded-2xl bg-gradient-to-br from-[#1B1F5E] to-[#2A2F7E] p-2 flex items-center justify-center shadow-md shadow-indigo-950/10 text-white relative group">
+          <svg class="w-7 h-7 text-[#F97316]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+          <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-[#F97316] rounded-full flex items-center justify-center text-[9px] font-bold text-white">
+            JH
+          </span>
+        </div>
+
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-[#1B1F5E]">
+              Bhasha Setu <span class="text-sm sm:text-base font-medium text-[#F97316] ml-1">| Language Bridge</span>
+            </h1>
+            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#1B1F5E]/10 text-[#1B1F5E] border border-[#1B1F5E]/20">
+              SIH 2026 (SIH26042)
+            </span>
+          </div>
+          <p class="text-xs text-gray-500 font-medium">
+            Jharkhand PALASH Framework • Multilingual Primary Education Bridge
+          </p>
+        </div>
+      </div>
+
+      <!-- Center Status: Indigenous Languages Active Indicator -->
+      <div class="hidden xl:flex items-center space-x-2 bg-[#FAFAFA] px-3.5 py-1.5 rounded-2xl border border-[#1B1F5E]/15 text-xs text-[#1B1F5E]">
+        <span class="font-semibold text-gray-600">Target Tribal Language:</span>
+        <span id="languageBadge" class="font-bold text-[#F97316] bg-white px-2.5 py-0.5 rounded-lg border border-orange-200 shadow-2xs font-olchiki">
+          ᱥᱟᱱᱛᱟᱲᱤ (Santhali)
+        </span>
+        <span class="text-gray-400">•</span>
+        <span class="text-gray-600">Mode: <strong class="text-[#1B1F5E]">Bilingual Co-Pilot</strong></span>
+      </div>
+
+      <!-- Controls & Connectivity Toggle -->
+      <div class="flex items-center space-x-3 sm:space-x-4">
+        <!-- Connectivity Badge -->
+        <div id="connectivityStatusBadge" class="flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs bg-indigo-100/90 border border-indigo-300">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+          <span class="text-indigo-900 font-medium">Online (Active)</span>
+        </div>
+
+        <!-- Simulate Low/No Connectivity Switch -->
+        <div class="flex items-center space-x-2 bg-white px-3 py-1.5 rounded-2xl border border-gray-200 shadow-2xs">
+          <label for="offlineToggle" class="text-xs font-semibold text-gray-700 cursor-pointer select-none">
+            Offline Mode
+          </label>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="offlineToggle" class="sr-only peer">
+            <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange-500"></div>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mode Switcher: Overview / Live Classroom Console / PDF Translator -->
+    <div class="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 pb-3 flex items-center gap-3 flex-wrap">
+      <button id="navOverviewMode" type="button" class="mode-tab-btn active px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all">
+        <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+        <span>Overview</span>
+      </button>
+      <button id="navLiveMode" type="button" class="mode-tab-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all">
+        <i data-lucide="radio" class="w-3.5 h-3.5"></i>
+        <span>Live Classroom Console</span>
+      </button>
+      <button id="navPdfMode" type="button" class="mode-tab-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all">
+        <i data-lucide="file-input" class="w-3.5 h-3.5"></i>
+        <span>PDF Translator (Hindi \u2192 Mundari)</span>
+      </button>
+      <span class="real-data-badge hidden md:inline-flex items-center gap-1.5 ml-auto px-3 py-1.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-300">
+        <i data-lucide="database" class="w-3 h-3"></i>
+        <span id="realDataStatBadge">Mundari verified on 17,809 real sentences</span>
+      </span>
+    </div>
+  </header>
+
+  <!-- ============================================================= -->
+  <!-- OVERVIEW / LANDING PAGE -->
+  <!-- ============================================================= -->
+  <main id="overviewModeSection" class="flex-1 w-full mx-auto flex flex-col">
+
+    <!-- HERO: 3D ANIMATED AI CO-TEACHER SHOWCASE -->
+    <!-- HERO: 3D ANIMATED AI CO-TEACHER SHOWCASE -->
+    <section class="hero-3d-wrapper">
+      <div class="absolute inset-0 opacity-[0.07] hero-pattern pointer-events-none"></div>
+      
+      <!-- 3D Subtle Ambient Halos -->
+      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#F97316]/15 blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-indigo-400/10 blur-3xl pointer-events-none"></div>
+
+      <div class="hero-3d-container">
+
+        <!-- Left Column: Vision & Actions -->
+        <div class="hero-info-col">
+          <span class="hero-badge">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-orange-300"></i>
+            <span>Smart India Hackathon 2026 &middot; Problem Statement SIH26042</span>
+          </span>
+
+          <h1 class="hero-title">
+            Bhasha Setu <span class="text-orange-300">|</span> भाषा सेतु
+          </h1>
+          <p class="hero-subtitle">
+            The 3D AI Co-Teacher &amp; Multilingual Language Bridge
+          </p>
+          <p class="hero-desc">
+            An intelligent, lifelike AI co-teacher that empowers Hindi-speaking teachers to instantly teach
+            primary students in their own tribal mother tongue — built for Jharkhand's PALASH framework with
+            verified linguistic corpus data, live speech recognition, and real-time interactive 3D co-teaching.
+          </p>
+
+          <!-- CTAs -->
+          <div class="hero-btn-group">
+            <button data-jump="live" class="hero-btn hero-btn-primary">
+              <i data-lucide="radio" class="w-4 h-4"></i>
+              <span>Open Live Classroom Console</span>
+            </button>
+            <button data-jump="pdf" class="hero-btn hero-btn-secondary">
+              <i data-lucide="file-input" class="w-4 h-4"></i>
+              <span>Try PDF Translator</span>
+            </button>
+            <button id="heroTalkToAvatarBtn" type="button" class="hero-btn hero-btn-avatar">
+              <i data-lucide="smile" class="w-4 h-4 text-orange-300"></i>
+              <span>👋 Talk to Aditi</span>
+            </button>
+          </div>
+
+          <!-- Divider Line with proper margin -->
+          <hr class="hero-divider" />
+
+          <!-- Features Bar -->
+          <div class="hero-stats-grid">
+            <div class="hero-stat-item"><i data-lucide="wifi-off" class="w-3.5 h-3.5 text-orange-300 flex-shrink-0"></i> <span>100% Offline Edge</span></div>
+            <div class="hero-stat-item"><i data-lucide="database" class="w-3.5 h-3.5 text-orange-300 flex-shrink-0"></i> <span>17,809 Sentences</span></div>
+            <div class="hero-stat-item"><i data-lucide="mic" class="w-3.5 h-3.5 text-orange-300 flex-shrink-0"></i> <span>Live Hindi Speech</span></div>
+            <div class="hero-stat-item"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-orange-300 flex-shrink-0"></i> <span>WebGL 3D Co-Teacher</span></div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive 3D Co-Teacher Stage -->
+        <div class="hero-avatar-col">
+          <div class="avatar-3d-stage">
+            
+            <!-- Floating Speech Bubble -->
+            <div id="avatarSpeechBubble" class="avatar-speech-bubble opacity-0 hidden">
+              <div class="flex items-start gap-2.5">
+                <div class="w-7 h-7 rounded-full bg-[#1B1F5E] text-orange-300 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                  <i data-lucide="bot" class="w-4 h-4"></i>
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between text-[11px] font-bold text-[#1B1F5E] mb-0.5">
+                    <span>Aditi &middot; AI Co-Teacher</span>
+                    <span class="text-[9px] text-[#F97316] font-mono uppercase tracking-wider">Speaking</span>
+                  </div>
+                  <p id="avatarSpeechText" class="text-xs text-gray-700 leading-snug font-medium">
+                    Johar! Namaskar! I am Aditi, your PALASH Language Co-Teacher. How can I help you today?
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Top Status Strip -->
+            <div class="flex items-center justify-between z-20 relative mb-2 px-1 text-xs">
+              <div class="flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">
+                <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
+                <span class="text-[11px] font-bold text-white tracking-wide">3D Co-Teacher &middot; Aditi</span>
+              </div>
+              <div class="flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 text-[10px] text-orange-300 font-semibold">
+                <i data-lucide="eye" class="w-3 h-3"></i>
+                <span>Eye Tracking Active</span>
+              </div>
+            </div>
+
+            <!-- 3D Canvas Viewport -->
+            <div id="heroAvatarStage" class="w-full flex-1 rounded-2xl flex items-center justify-center relative overflow-hidden">
+              <!-- Loading Placeholder before 3D loads -->
+              <div id="heroAvatarLoader" class="flex flex-col items-center justify-center space-y-3 text-indigo-200">
+                <div class="w-8 h-8 border-3 border-orange-400 border-t-transparent rounded-full animate-spin"></div>
+                <span class="text-xs font-semibold tracking-wide">Initializing 3D Studio...</span>
+              </div>
+            </div>
+
+            <!-- Interactive Quick Control Chips -->
+            <div class="mt-3 pt-3 border-t border-white/15 flex flex-wrap items-center justify-center gap-1.5 z-20 relative">
+              <button id="avatarWaveBtn" type="button" class="avatar-chip-btn" title="Traditional Greeting Wave">
+                👋 <span>Johar</span>
+              </button>
+              <button id="avatarExplainBtn" type="button" class="avatar-chip-btn" title="Explain Lesson Gesture">
+                🎓 <span>Explain</span>
+              </button>
+              <button id="avatarSmileBtn" type="button" class="avatar-chip-btn" title="Radiant Smile">
+                ✨ <span>Smile</span>
+              </button>
+              <button id="avatarGlassesBtn" type="button" class="avatar-chip-btn" title="Toggle Spectacles">
+                👓 <span>Glasses</span>
+              </button>
+              <button id="avatarOutfitBtn" type="button" class="avatar-chip-btn" title="Change Outfit Theme">
+                👗 <span>Outfit</span>
+              </button>
+              <button id="avatarCamBtn" type="button" class="avatar-chip-btn" title="Zoom In / Out">
+                🔍 <span>Focus</span>
+              </button>
+            </div>
+
+          </div>
+
+          <p class="text-xs text-indigo-100/80 mt-3 text-center">
+            💡 Move your mouse across the screen &mdash; Aditi smoothly follows your cursor with lifelike eye &amp; head movement!
+          </p>
+
+        </div>
+
+    </section>
+
+    <!-- STAT STRIP -->
+    <section class="bg-white border-b border-gray-100">
+      <div class="max-w-6xl mx-auto px-6 sm:px-10 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="stat-card">
+          <div class="text-3xl sm:text-4xl font-black text-[#1B1F5E]">17,809</div>
+          <div class="text-[11px] sm:text-xs font-semibold text-gray-500 mt-1">Real Hindi-Mundari sentence pairs</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-3xl sm:text-4xl font-black text-[#1B1F5E]">20,560</div>
+          <div class="text-[11px] sm:text-xs font-semibold text-gray-500 mt-1">Words in the trained lexicon</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-3xl sm:text-4xl font-black text-[#1B1F5E]">4</div>
+          <div class="text-[11px] sm:text-xs font-semibold text-gray-500 mt-1">Tribal languages in the interface</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-3xl sm:text-4xl font-black text-[#1B1F5E]">0</div>
+          <div class="text-[11px] sm:text-xs font-semibold text-gray-500 mt-1">Internet connection required to run</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE PROBLEM / SOLUTION -->
+    <section class="max-w-6xl mx-auto px-6 sm:px-10 py-16 grid md:grid-cols-2 gap-10">
+      <div class="p-7 sm:p-8 rounded-3xl bg-[#FFF7ED] border border-[#F97316]/20">
+        <div class="w-10 h-10 rounded-xl bg-[#F97316] text-white flex items-center justify-center mb-4">
+          <i data-lucide="triangle-alert" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-lg font-black text-[#1B1F5E] mb-2">The Problem</h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Jharkhand's PALASH programme teaches Ho, Mundari, Santhali, Kurukh &amp; Kharia
+          in 1,000+ tribal schools. But most posted teachers are Hindi-medium trained,
+          with no tools to teach in the child's mother tongue — and these languages have
+          almost no digital NLP resources to build on.
+        </p>
+      </div>
+      <div class="p-7 sm:p-8 rounded-3xl bg-[#EEF2FF] border border-[#1B1F5E]/15">
+        <div class="w-10 h-10 rounded-xl bg-[#1B1F5E] text-white flex items-center justify-center mb-4">
+          <i data-lucide="lightbulb" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-lg font-black text-[#1B1F5E] mb-2">Our Solution</h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Bhasha Setu is an AI co-teacher: it listens to the teacher's Hindi, translates
+          it live into the classroom's tribal language with a visible confidence score,
+          reads it aloud, and can turn an entire Hindi lesson PDF into a translated
+          worksheet — all running locally, so it works in classrooms with no signal.
+        </p>
+      </div>
+    </section>
+
+    <!-- LANGUAGE STATUS -->
+    <section class="max-w-6xl mx-auto px-6 sm:px-10 pb-16">
+      <div class="text-center mb-8">
+        <h3 class="text-2xl font-black text-[#1B1F5E]">Language Status — Honestly Labeled</h3>
+        <p class="text-sm text-gray-500 mt-1.5 max-w-xl mx-auto">Every language shows exactly what backs its translations. No language claims more than it can verify.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="lang-status-card border-indigo-300 bg-indigo-50/40">
+          <span class="lang-status-pill bg-indigo-600 text-white">Verified</span>
+          <div class="text-lg font-black text-[#1B1F5E] mt-3">Mundari &amp; Santhali</div>
+          <div class="text-xs text-gray-600 mt-1.5 leading-relaxed">Ol Chiki &amp; Devanagari corpus, full A-Z phonetics, and speech synthesis.</div>
+        </div>
+        <div class="lang-status-card border-blue-300 bg-blue-50/40">
+          <span class="lang-status-pill bg-blue-600 text-white">Full Support</span>
+          <div class="text-lg font-black text-[#1B1F5E] mt-3">Ho</div>
+          <div class="text-xs text-gray-600 mt-1.5 leading-relaxed">Warang Chiti (𑢹𑣉) &amp; Devanagari scripts, foundational A-Z phonetics &amp; voice.</div>
+        </div>
+        <div class="lang-status-card border-purple-300 bg-purple-50/40">
+          <span class="lang-status-pill bg-purple-600 text-white">Full Support</span>
+          <div class="text-lg font-black text-[#1B1F5E] mt-3">Kurukh (Oraon)</div>
+          <div class="text-xs text-gray-600 mt-1.5 leading-relaxed">Tolang Siki (𑶀𑶌𑶃) &amp; Devanagari literacy mapping, numbers 1-10 &amp; voice.</div>
+        </div>
+        <div class="lang-status-card border-orange-300 bg-orange-50/40">
+          <span class="lang-status-pill bg-orange-600 text-white">Full Support</span>
+          <div class="text-lg font-black text-[#1B1F5E] mt-3">Kharia</div>
+          <div class="text-xs text-gray-600 mt-1.5 leading-relaxed">Official PALASH primary textbook vocabulary, full A-Z phonetics &amp; voice.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="bg-[#FAFAFA] border-t border-gray-100 py-16">
+      <div class="max-w-6xl mx-auto px-6 sm:px-10">
+        <h3 class="text-2xl font-black text-[#1B1F5E] text-center mb-10">How It Works</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="how-step">
+            <div class="how-step-num">1</div>
+            <h4 class="font-bold text-[#1B1F5E] text-sm mt-3">Speak or type in Hindi</h4>
+            <p class="text-xs text-gray-500 mt-1.5 leading-relaxed">The teacher speaks into the mic (live Hindi speech recognition) or picks a ready-made classroom phrase.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">2</div>
+            <h4 class="font-bold text-[#1B1F5E] text-sm mt-3">Real-data translation engine</h4>
+            <p class="text-xs text-gray-500 mt-1.5 leading-relaxed">Matched against a real corpus first, falling back to a trained statistical lexicon — every result is labeled with an honest confidence score.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">3</div>
+            <h4 class="font-bold text-[#1B1F5E] text-sm mt-3">Spoken, displayed &amp; downloadable</h4>
+            <p class="text-xs text-gray-500 mt-1.5 leading-relaxed">The classroom display speaks and shows the translation, and full PDFs can be translated and downloaded — all offline.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- LIVE CLASSROOM CONSOLE (Main Split-Screen Dual-Persona Workspace) -->
+  <!-- ============================================================= -->
+  <main id="liveModeSection" class="hidden flex-1 max-w-[1680px] w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
+    <!-- Split Screen Grid (Left: Teacher Co-Pilot | Right: Classroom Display) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 items-stretch">
+
+      <!-- ========================================================================= -->
+      <!-- LEFT SCREEN: TEACHER CO-PILOT [5 Columns on Desktop] -->
+      <!-- ========================================================================= -->
+      <section class="lg:col-span-5 flex flex-col space-y-4">
+        
+        <!-- Persona Header Card -->
+        <div class="glass-panel rounded-3xl p-4 sm:p-5 border-indigo-900/15 shadow-sm bg-white/90">
+          
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-[#1B1F5E] text-white flex items-center justify-center font-bold text-sm shadow-sm">
+                <i data-lucide="user-check" class="w-5 h-5 text-orange-300"></i>
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-[#1B1F5E]">Teacher Co-Pilot</h2>
+                <p class="text-[11px] text-gray-500 font-medium">Classroom Voice Recognition & Validation Console</p>
+              </div>
+            </div>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#1B1F5E] text-white">
+              Voice Input
+            </span>
+          </div>
+
+          <!-- Selectors: Target Language, Grade & Subject -->
+          <div class="mt-4 space-y-3">
+            
+            <!-- Target Tribal Language Selector -->
+            <div>
+              <label class="block text-[11px] font-bold tracking-wide uppercase text-gray-600 mb-1.5">
+                Target Tribal Language
+              </label>
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+                <button type="button" data-lang="santhali" class="lang-tab-btn active px-3 py-2 rounded-xl text-xs font-bold border border-indigo-900/15 bg-[#1B1F5E] text-white transition-all shadow-sm text-center">
+                  <div class="font-olchiki">ᱥᱟᱱᱛᱟᱲᱤ</div>
+                  <div class="text-[10px] opacity-80 font-sans">Santhali (Ol Chiki)</div>
+                </button>
+                <button type="button" data-lang="ho" class="lang-tab-btn px-3 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white/70 text-gray-700 hover:bg-indigo-50 transition-all text-center">
+                  <div>ᱦᱳ (Ho)</div>
+                  <div class="text-[10px] opacity-70 font-sans">Ho · Warang Chiti</div>
+                </button>
+                <button type="button" data-lang="mundari" class="lang-tab-btn px-3 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white/70 text-gray-700 hover:bg-indigo-50 transition-all text-center">
+                  <div>ᱢᱩᱱᱰᱟᱨᱤ</div>
+                  <div class="text-[10px] opacity-70 font-sans">Mundari · PALASH</div>
+                </button>
+                <button type="button" data-lang="kurukh" class="lang-tab-btn px-3 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white/70 text-gray-700 hover:bg-indigo-50 transition-all text-center">
+                  <div>कुँड़ुख़</div>
+                  <div class="text-[10px] opacity-80 font-sans">Kurukh · Tolang Siki</div>
+                </button>
+                <button type="button" data-lang="kharia" class="lang-tab-btn px-3 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white/70 text-gray-700 hover:bg-indigo-50 transition-all text-center">
+                  <div>खड़िया</div>
+                  <div class="text-[10px] opacity-80 font-sans">Kharia · Devanagari</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Grade & Subject Selectors -->
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div>
+                <label for="gradeSelect" class="block text-[11px] font-bold tracking-wide text-gray-600 mb-1">
+                  Grade
+                </label>
+                <select id="gradeSelect" class="w-full bg-[#FAFAFA] border border-gray-300 rounded-xl px-3 py-2 text-xs font-semibold text-[#1B1F5E] focus:ring-2 focus:ring-[#1B1F5E] focus:outline-none">
+                  <option value="class1" selected>Grade 1 (Balvatika)</option>
+                  <option value="class2">Grade 2</option>
+                  <option value="class3">Grade 3</option>
+                </select>
+              </div>
+              <div>
+                <label for="subjectSelect" class="block text-[11px] font-bold tracking-wide text-gray-600 mb-1">
+                  Subject Domain
+                </label>
+                <select id="subjectSelect" class="w-full bg-[#FAFAFA] border border-gray-300 rounded-xl px-3 py-2 text-xs font-semibold text-[#1B1F5E] focus:ring-2 focus:ring-[#1B1F5E] focus:outline-none">
+                  <option value="literacy" selected>Foundational Literacy</option>
+                  <option value="numeracy">Numeracy</option>
+                  <option value="evs">Environment & Nature (EVS)</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Prominent Microphone & Real-Time Audio Capture -->
+        <div class="glass-panel rounded-3xl p-5 border-indigo-900/15 shadow-sm bg-white/90 flex flex-col space-y-4">
+          
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-700 flex items-center space-x-1.5">
+              <i data-lucide="mic" class="w-4 h-4 text-[#F97316]"></i>
+              <span>Live Voice Capture</span>
+            </span>
+            <span id="micStatusText" class="text-[11px] font-medium text-gray-500">
+              Click mic to speak
+            </span>
+          </div>
+
+          <!-- Big Center Microphone Action -->
+          <div class="flex flex-col items-center justify-center py-2 space-y-3">
+            <div class="relative flex items-center justify-center">
+              <!-- Animated Ring Glow -->
+              <div class="absolute w-24 h-24 rounded-full bg-[#F97316]/10 animate-ping pointer-events-none"></div>
+              
+              <!-- Main Action Mic Button -->
+              <button id="micButton" type="button" aria-label="Microphone" class="relative z-10 w-20 h-20 rounded-full bg-[#1B1F5E] hover:bg-[#2A2F7E] active:scale-95 text-white flex items-center justify-center shadow-lg transition-all duration-300 group cursor-pointer focus:outline-none">
+                <i data-lucide="mic" class="w-8 h-8 text-orange-300 group-hover:scale-110 transition-transform"></i>
+              </button>
+            </div>
+
+            <!-- Active Audio Wave Canvas Visualizer -->
+            <div class="w-full max-w-sm px-4">
+              <canvas id="waveCanvas" height="40" class="w-full rounded-lg bg-indigo-950/5 border border-indigo-900/10"></canvas>
+            </div>
+          </div>
+
+          <!-- Live Transcription Box -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <label for="transcriptionInput" class="text-xs font-semibold text-gray-700 flex items-center space-x-1">
+                <i data-lucide="file-text" class="w-3.5 h-3.5 text-gray-500"></i>
+                <span>Teacher's Voice (Live Transcription):</span>
+              </label>
+              <span class="text-[10px] text-gray-400">Web Speech API / Manual Input</span>
+            </div>
+
+            <div class="relative">
+              <input type="text" id="transcriptionInput" value="Hello children, open your books" placeholder="Speak or type here (e.g., Today we will learn counting)..." class="w-full bg-[#FAFAFA] border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm font-medium text-[#1B1F5E] pr-10 focus:ring-2 focus:ring-[#1B1F5E] focus:outline-none shadow-2xs">
+              <button id="sendTranscriptBtn" type="button" title="Translate & Process" class="absolute right-2 top-2 p-1.5 rounded-lg bg-[#1B1F5E] text-white hover:bg-[#2A2F7E] transition-colors">
+                <i data-lucide="corner-down-left" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Presets & Alphabet Switcher -->
+          <div class="space-y-2 pt-1">
+            <div class="flex items-center justify-between text-[11px] gap-2 flex-wrap">
+              <!-- Preset Mode Toggle: Phrases vs Alphabet -->
+              <div class="inline-flex p-0.5 rounded-xl bg-gray-100/90 border border-gray-200 text-xs">
+                <button id="presetTabPhrases" type="button" class="px-2.5 py-1 rounded-lg font-bold text-xs bg-white text-[#1B1F5E] shadow-2xs transition-all flex items-center gap-1.5">
+                  <i data-lucide="message-square" class="w-3 h-3 text-[#F97316]"></i>
+                  <span>Phrases</span>
+                </button>
+                <button id="presetTabAlphabet" type="button" class="px-2.5 py-1 rounded-lg font-bold text-xs text-gray-600 hover:text-[#1B1F5E] transition-all flex items-center gap-1.5">
+                  <i data-lucide="type" class="w-3 h-3 text-[#1B1F5E]"></i>
+                  <span>Alphabet (A–Z)</span>
+                </button>
+              </div>
+
+              <button id="openAlphabetModalBtn" type="button" class="inline-flex items-center gap-1 text-[11px] font-bold text-[#F97316] hover:text-[#EA580C] transition-colors py-0.5 px-2 rounded-lg hover:bg-orange-50">
+                <i data-lucide="table-2" class="w-3.5 h-3.5"></i>
+                <span>Full A–Z Chart</span>
+              </button>
+            </div>
+
+            <!-- Phrases Presets Container -->
+            <div id="presetChipsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+              <!-- Filled dynamically by app.js -->
+            </div>
+
+            <!-- Alphabet A-Z Grid Container (Hidden by default, toggled via presetTabAlphabet) -->
+            <div id="alphabetChipsContainer" class="hidden">
+              <div class="text-[10px] text-gray-500 font-medium mb-1.5 flex items-center justify-between">
+                <span id="alphabetGridSubtitle">Tap any letter to translate into native script &amp; display on screen:</span>
+                <span class="text-[#F97316] font-bold">26 Letters</span>
+              </div>
+              <div id="alphabetGrid" class="grid grid-cols-7 sm:grid-cols-9 gap-1.5 max-h-48 overflow-y-auto pr-1">
+                <!-- Filled dynamically by app.js -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Teacher Validation Card -->
+        <div class="glass-panel rounded-3xl p-5 border-indigo-900/15 shadow-sm bg-white/90 flex flex-col space-y-3">
+          
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse"></span>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-[#1B1F5E]">
+                Teacher Validation
+              </h3>
+            </div>
+
+            <!-- Confidence Score Tag -->
+            <div class="flex items-center space-x-2">
+              <span id="confidenceBadge" class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-indigo-100 text-indigo-800 border border-indigo-300">
+                98% Confidence
+              </span>
+              <button id="editTranslationBtn" type="button" class="flex items-center space-x-1 px-2 py-0.5 rounded-lg text-xs font-medium text-[#1B1F5E] bg-gray-100 hover:bg-gray-200 transition-colors">
+                <i data-lucide="edit-3" class="w-3 h-3"></i>
+                <span>Edit</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="text-[11px] text-gray-600 flex items-center justify-between">
+            <span id="corpusVerificationTag" class="text-indigo-800 font-medium">
+              Verified by PALASH Santhali Corpus
+            </span>
+            <span class="text-gray-400">Classroom Projection Preview</span>
+          </div>
+
+          <!-- Editable Validation Area -->
+          <div class="relative">
+            <textarea id="validationTextarea" rows="2" class="w-full bg-[#FAFAFA] border border-gray-300 rounded-xl p-3 text-sm font-semibold text-[#1B1F5E] font-olchiki focus:ring-2 focus:ring-[#1B1F5E] focus:outline-none resize-none" readonly>
+ᱡᱚᱦᱟᱨ ᱜᱤᱫᱽᱨᱟᱹ, ᱟᱯᱮᱭᱟᱜ ᱯᱩᱛᱷᱤ ᱡᱷᱤᱡᱽ ᱢᱮ
+            </textarea>
+          </div>
+
+          <!-- Broadcast Button -->
+          <div class="flex items-center justify-end space-x-2 pt-1">
+            <button id="broadcastBtn" type="button" class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-[#1B1F5E] hover:bg-[#2A2F7E] text-white text-xs font-bold shadow-sm active:scale-98 transition-all">
+              <i data-lucide="send" class="w-3.5 h-3.5 text-orange-300"></i>
+              <span>Approve &amp; Broadcast to Classroom</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Student Response Inbox for Teacher -->
+        <div class="glass-panel rounded-3xl p-5 border-indigo-900/15 shadow-sm bg-white/90 flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="inbox" class="w-4 h-4 text-[#F97316]"></i>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-[#1B1F5E]">
+                Live Student Feedback Inbox
+              </h3>
+            </div>
+            <span class="text-[10px] text-gray-400">Two-way dialect bridge (Tribal ➔ English)</span>
+          </div>
+
+          <div id="teacherResponseInbox" class="flex-1 space-y-2 overflow-y-auto max-h-[160px] pr-1">
+            <div id="inboxEmptyState" class="text-center py-6 text-gray-400 text-xs">
+              <i data-lucide="message-square-dashed" class="w-6 h-6 mx-auto mb-1 text-gray-300"></i>
+              <span>Student responses from the right screen will appear here.</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================================= -->
+      <!-- RIGHT SCREEN: CLASSROOM DISPLAY [7 Columns] -->
+      <!-- ========================================================================= -->
+      <section class="lg:col-span-7 flex flex-col space-y-4">
+        
+        <!-- Classroom Smart Board Frame -->
+        <div class="glass-panel rounded-3xl p-6 border-indigo-900/20 shadow-md bg-white/95 flex flex-col flex-1 relative overflow-hidden">
+          
+          <!-- Decorative Top Bar -->
+          <div class="flex items-center justify-between pb-4 border-b border-gray-200/80">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-2xl bg-[#F97316] text-white flex items-center justify-center font-bold shadow-sm">
+                <i data-lucide="tv" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="flex items-center space-x-2">
+                  <h2 class="text-lg font-black text-[#1B1F5E]">
+                    Classroom Interactive Smart Display
+                  </h2>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#F97316]/15 text-[#F97316]">
+                    Student Facing
+                  </span>
+                </div>
+                <p class="text-xs text-gray-500 font-medium">
+                  Grade 1–3 Multilingual Visual Flashcards &amp; Synthetic Voice
+                </p>
+              </div>
+            </div>
+
+            <!-- Language Badge on Classroom Screen -->
+            <div class="flex items-center space-x-2">
+              <span id="targetScriptBadge" class="text-xs font-bold px-3 py-1 rounded-xl bg-indigo-50 text-[#1B1F5E] border border-indigo-200">
+                Santhali (Ol Chiki)
+              </span>
+            </div>
+          </div>
+
+          <!-- Dynamic Visual Flashcard Stage -->
+          <div class="mt-5 flex-1 flex flex-col items-center justify-center">
+            
+            <div class="w-full max-w-2xl bg-gradient-to-b from-[#FAFAFA] to-[#FFF7ED] rounded-3xl border-2 border-[#1B1F5E]/15 p-6 shadow-sm flashcard-stage flex flex-col items-center text-center relative">
+              
+              <!-- Cultural Tribal Motif Decors in Corners -->
+              <div class="absolute top-3 left-3 text-[10px] font-mono text-gray-400">PALASH • EDTECH</div>
+              <div class="absolute top-3 right-3 flex items-center space-x-1 text-indigo-800 text-[11px] font-semibold">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#F97316]"></i>
+                <span>Visual Flashcard</span>
+              </div>
+
+              <!-- Visual SVG Container -->
+              <div id="flashcardVisualArea" class="py-2 flex items-center justify-center">
+                <!-- Dynamic SVG will be rendered here -->
+              </div>
+
+              <div class="mt-2 space-y-1">
+                <h4 id="flashcardTitle" class="text-sm font-bold text-gray-700">
+                  Open Book
+                </h4>
+                <p id="flashcardDescription" class="text-xs text-gray-500">
+                  Open the colourful storybook
+                </p>
+              </div>
+
+              <!-- Big Native Script Translation Display -->
+              <div class="mt-6 w-full bg-white/90 backdrop-blur rounded-2xl p-5 border border-indigo-900/10 shadow-inner">
+                
+                <div class="flex items-center justify-center space-x-3 mb-2">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-[#F97316] bg-orange-50 px-2 py-0.5 rounded-md border border-orange-200">
+                    Indigenous Script
+                  </span>
+                </div>
+
+                <!-- Main Native Script Text -->
+                <div id="classroomNativeScript" class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#1B1F5E] tracking-wide font-olchiki py-2 select-all">
+                  ᱡᱚᱦᱟᱨ ᱜᱤᱫᱽᱨᱟᱹ, ᱟᱯᱮᱭᱟᱜ ᱯᱩᱛᱷᱤ ᱡᱷᱤᱡᱽ ᱢᱮ
+                </div>
+
+                <!-- Phonetic English Guide -->
+                <div id="classroomPhoneticEnglish" class="text-sm sm:text-base font-semibold text-[#9A3412] italic tracking-wide mt-1">
+                  Pronunciation: "Johar gidra, apeyag puthi jhij me"
+                </div>
+
+                <!-- English Translation Reference -->
+                <div id="classroomHindiTranslation" class="text-xs sm:text-sm font-medium text-gray-600 mt-2 border-t border-gray-100 pt-2">
+                  English: "Hello children, open your books"
+                </div>
+
+                <!-- Audio Playback Action -->
+                <div class="mt-4 flex items-center justify-center">
+                  <button id="classroomSpeakerBtn" type="button" class="flex items-center space-x-2.5 px-6 py-2.5 rounded-full bg-[#F97316] hover:bg-[#EA580C] active:scale-95 text-white font-bold text-sm shadow-md transition-all duration-200 group">
+                    <i data-lucide="volume-2" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                    <span>Play Voice Pronunciation</span>
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Student Response Translation Simulator -->
+          <div class="mt-6 pt-5 border-t border-gray-200">
+            
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#F97316]"></span>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-[#1B1F5E]">
+                  Student Response Simulator
+                </h3>
+              </div>
+              <span class="text-[11px] text-gray-500">
+                Click any response to simulate a student reply
+              </span>
+            </div>
+
+            <!-- Student Action Response Buttons Grid -->
+            <div id="studentResponseGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+              <!-- Rendered dynamically by app.js -->
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- Presentation Context Footer -->
+    <footer class="mt-6 glass-panel rounded-2xl p-4 text-xs text-gray-600 flex flex-wrap items-center justify-between gap-3 bg-white/70">
+      <div class="flex items-center space-x-2">
+        <span class="px-2 py-0.5 rounded font-bold bg-[#1B1F5E] text-white text-[10px]">
+          SIH26042
+        </span>
+        <span class="font-medium text-[#1B1F5E]">
+          Bhasha Setu • Bridging Teachers &amp; Tribal Students (Santhali, Ho, Mundari)
+        </span>
+      </div>
+
+      <div class="flex items-center space-x-4 text-[11px] text-gray-500">
+        <span class="flex items-center space-x-1">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-700"></i>
+          <span>Certified PALASH Learning Units</span>
+        </span>
+        <span class="flex items-center space-x-1">
+          <i data-lucide="wifi-off" class="w-3.5 h-3.5 text-orange-700"></i>
+          <span>Zero-Internet Edge Ready</span>
+        </span>
+        <span class="flex items-center space-x-1">
+          <i data-lucide="mic" class="w-3.5 h-3.5 text-blue-700"></i>
+          <span>Live Web Speech API</span>
+        </span>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- PDF TRANSLATOR MODE (Hindi PDF -> Mundari PDF, real data) -->
+  <!-- ============================================================= -->
+  <main id="pdfModeSection" class="hidden flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col space-y-5">
+
+    <div class="glass-panel rounded-3xl p-6 border-indigo-900/15 shadow-sm bg-white/90">
+      <div class="flex items-start justify-between flex-wrap gap-3">
+        <div>
+          <h2 class="text-xl font-black text-[#1B1F5E] flex items-center gap-2">
+            <i data-lucide="file-text" class="w-5 h-5 text-[#F97316]"></i>
+            PDF Translator — Hindi to Mundari
+          </h2>
+          <p class="text-xs text-gray-500 font-medium mt-1 max-w-xl">
+            Upload any Hindi PDF (a lesson, a worksheet, a storybook). Every sentence
+            is translated using the <strong>real</strong> 17,809-sentence Hindi-Mundari
+            corpus and statistical lexicon — not a demo. High-confidence corpus matches
+            are shown in green; word-substituted (approximate) sentences are shown in
+            amber, with any untranslatable word flagged honestly.
+          </p>
+        </div>
+        <span class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-300 flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+          Runs 100% locally — no server, no internet needed after page load
+        </span>
+      </div>
+
+      <!-- Upload Zone -->
+      <div id="pdfDropZone" class="mt-5 border-2 border-dashed border-indigo-900/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-[#F97316] hover:bg-[#FFF7ED] transition-all">
+        <i data-lucide="upload-cloud" class="w-10 h-10 text-[#1B1F5E] mb-2"></i>
+        <p class="text-sm font-bold text-[#1B1F5E]">Click to choose a Hindi PDF, or drag it here</p>
+        <p class="text-[11px] text-gray-500 mt-1">Text-based PDFs work best (scanned/image PDFs need OCR, not included in this prototype)</p>
+        <input type="file" id="pdfFileInput" accept="application/pdf" class="hidden" />
+      </div>
+
+      <div id="pdfFileNameRow" class="hidden mt-3 flex items-center justify-between bg-[#FAFAFA] border border-gray-200 rounded-xl px-4 py-2.5">
+        <span class="flex items-center gap-2 text-xs font-semibold text-[#1B1F5E]">
+          <i data-lucide="file-check-2" class="w-4 h-4 text-indigo-700"></i>
+          <span id="pdfFileName">—</span>
+        </span>
+        <button id="pdfTranslateBtn" type="button" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1B1F5E] hover:bg-[#2A2F7E] text-white text-xs font-bold shadow-sm transition-all">
+          <i data-lucide="languages" class="w-3.5 h-3.5 text-orange-300"></i>
+          <span>Translate to Mundari</span>
+        </button>
+      </div>
+
+      <!-- Progress -->
+      <div id="pdfProgressRow" class="hidden mt-4 flex items-center gap-3 text-xs text-gray-600">
+        <div class="w-5 h-5 border-2 border-[#F97316] border-t-transparent rounded-full animate-spin"></div>
+        <span id="pdfProgressText">Reading PDF…</span>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="pdfResultsPanel" class="hidden glass-panel rounded-3xl p-6 border-indigo-900/15 shadow-sm bg-white/90 flex-1 flex flex-col">
+      <div class="flex items-center justify-between flex-wrap gap-3 pb-4 border-b border-gray-100">
+        <div>
+          <h3 class="text-sm font-bold text-[#1B1F5E]">Translation Preview</h3>
+          <p id="pdfResultsSummary" class="text-[11px] text-gray-500 mt-0.5">—</p>
+        </div>
+        <button id="pdfDownloadBtn" type="button" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white text-xs font-bold shadow-sm active:scale-95 transition-all">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download Translated PDF</span>
+        </button>
+      </div>
+      <div id="pdfResultsList" class="mt-4 space-y-3 overflow-y-auto max-h-[520px] pr-1"></div>
+    </div>
+
+  <!-- ============================================================= -->
+  <!-- ALPHABET TRANSLATOR MODAL (A-Z Table matching user chart)     -->
+  <!-- ============================================================= -->
+  <div id="alphabetModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="relative bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gray-200 overflow-hidden fade-scale-in">
+      
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-gray-200 flex items-center justify-between bg-gradient-to-r from-indigo-50/70 to-orange-50/50">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-2xl bg-[#1B1F5E] text-white flex items-center justify-center font-bold shadow-sm">
+            <i data-lucide="type" class="w-5 h-5 text-orange-300"></i>
+          </div>
+          <div>
+            <h3 id="alphabetModalTitle" class="text-base font-black text-[#1B1F5E]">
+              English &rarr; Santhali (Ol Chiki) Alphabet Translator
+            </h3>
+            <p id="alphabetModalSubtitle" class="text-xs text-gray-500 font-medium">
+              Foundational Literacy • 26 English Alphabets to Tribal Script &amp; Phonetics
+            </p>
+          </div>
+        </div>
+        <button id="closeAlphabetModalBtn" type="button" class="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Search / Filter Bar -->
+      <div class="p-4 border-b border-gray-100 bg-gray-50/50 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="relative flex-1 w-full">
+          <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-2.5"></i>
+          <input type="text" id="alphabetSearchInput" placeholder="Filter by English letter, native sound, or word (e.g., A, B, LA, OB)..." class="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-xs font-semibold text-[#1B1F5E] focus:ring-2 focus:ring-[#1B1F5E] focus:outline-none">
+        </div>
+        <div id="alphabetModalLangPills" class="flex items-center gap-1 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+          <!-- Populated by app.js -->
+        </div>
+      </div>
+
+      <!-- Table Body -->
+      <div class="flex-1 overflow-y-auto p-4">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-gray-200 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+              <th class="py-2.5 px-3">English</th>
+              <th id="alphabetModalScriptTh" class="py-2.5 px-3">Native Script</th>
+              <th class="py-2.5 px-3">Letter Name</th>
+              <th class="py-2.5 px-3">Sound / Devanagari</th>
+              <th class="py-2.5 px-3">Example Word</th>
+              <th class="py-2.5 px-3 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="alphabetTableBody" class="divide-y divide-gray-100 text-xs">
+            <!-- Rendered dynamically by app.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
+        <span class="text-[11px] text-gray-500">
+          Source: Jharkhand PALASH Foundational Literacy Framework (Grade 1–2)
+        </span>
+        <button id="closeAlphabetModalBtn2" type="button" class="px-4 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-bold transition-colors">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating 3D Co-Teacher Companion Dock -->
+  <div id="floatingAvatarDock" class="floating-companion-dock" title="Click to greet Aditi AI Co-Teacher">
+    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#F97316] to-orange-300 flex items-center justify-center text-sm font-bold text-white shadow-md">
+      👩‍🏫
+    </div>
+    <div class="text-left leading-tight">
+      <div class="text-[11px] font-bold text-white flex items-center gap-1.5">
+        <span>Aditi 3D AI</span>
+        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+      </div>
+      <div class="text-[9px] text-indigo-200/90 font-medium">PALASH Co-Teacher &middot; Johar!</div>
+    </div>
+  </div>
+
+  <!-- Three.js 3D WebGL Engine & GLTF Loader (Local Vendor) -->
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/GLTFLoader.js"></script>
+  <script src="js/avatar-model-data.js"></script>
+  <script src="js/avatar-3d.js"></script>
+
+  <!-- Load Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/mundari-data.js"></script>
+  <script src="js/mundari-engine.js"></script>
+  <script src="js/font-devanagari-base64.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/translator.js"></script>
+  <script src="js/pdf-translator.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Initialize Lucide Icons safely once DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
+
+

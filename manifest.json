@@ -1,0 +1,20 @@
+{
+  "name": "Bhasha Setu | Language Bridge",
+  "short_name": "BhashaSetu",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1E3A2F",
+  "background_color": "#FDFBF7",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

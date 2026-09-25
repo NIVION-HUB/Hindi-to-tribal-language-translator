@@ -1,0 +1,114 @@
+/* Self-hosted fonts (Inter, Noto Sans, Noto Sans Ol Chiki) -- vendored
+   locally from Fontsource so the site works with zero internet access.
+   Replaces the former Google Fonts CDN @import/link. */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/inter-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/inter-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../fonts/inter-latin-800-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/noto-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/noto-sans-latin-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/noto-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/noto-sans-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans Ol Chiki';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/noto-sans-ol-chiki-ol-chiki-500-normal.woff2') format('woff2');
+  unicode-range: U+1C50-1C7F;
+}
+@font-face {
+  font-family: 'Noto Sans Ol Chiki';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/noto-sans-ol-chiki-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans Ol Chiki';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/noto-sans-ol-chiki-ol-chiki-600-normal.woff2') format('woff2');
+  unicode-range: U+1C50-1C7F;
+}
+@font-face {
+  font-family: 'Noto Sans Ol Chiki';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/noto-sans-ol-chiki-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans Ol Chiki';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/noto-sans-ol-chiki-ol-chiki-700-normal.woff2') format('woff2');
+  unicode-range: U+1C50-1C7F;
+}
+@font-face {
+  font-family: 'Noto Sans Ol Chiki';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/noto-sans-ol-chiki-latin-700-normal.woff2') format('woff2');
+}
