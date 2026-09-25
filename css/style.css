@@ -644,3 +644,27 @@ body {
 
 
 
+
+/* ===== FIX FOR ARBITRARY TAILWIND HEX CLASSES ===== */
+.bg-\[\#1B1F5E\] { background-color: #1B1F5E !important; }
+.text-\[\#1B1F5E\] { color: #1B1F5E !important; }
+.border-\[\#1B1F5E\] { border-color: #1B1F5E !important; }
+
+/* Opacity variants for 1B1F5E (27, 31, 94) */
+.bg-\[\#1B1F5E\]\/10 { background-color: rgba(27, 31, 94, 0.1) !important; }
+.border-\[\#1B1F5E\]\/10 { border-color: rgba(27, 31, 94, 0.1) !important; }
+.border-\[\#1B1F5E\]\/15 { border-color: rgba(27, 31, 94, 0.15) !important; }
+.border-\[\#1B1F5E\]\/20 { border-color: rgba(27, 31, 94, 0.2) !important; }
+
+/* Gradients */
+.from-\[\#1B1F5E\] { --tw-gradient-from: #1B1F5E var(--tw-gradient-from-position); --tw-gradient-to: rgba(27, 31, 94, 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+.to-\[\#2A2F7E\] { --tw-gradient-to: #2A2F7E var(--tw-gradient-to-position) !important; }
+
+/* Orange Accents */
+.text-\[\#F97316\] { color: #F97316 !important; }
+.bg-\[\#F97316\] { background-color: #F97316 !important; }
+.border-\[\#F97316\] { border-color: #F97316 !important; }
+.ring-\[\#F97316\] { --tw-ring-color: #F97316 !important; }
+.hover\:border-\[\#F97316\]:hover { border-color: #F97316 !important; }
+
+.text-\[\#EA580C\] { color: #EA580C !important; }

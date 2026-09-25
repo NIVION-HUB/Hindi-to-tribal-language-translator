@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
         glassesBtn.addEventListener('click', () => {
           if (window.avatar3D) {
             const hasGlasses = window.avatar3D.toggleGlasses();
-            glassesBtn.classList.toggle('bg-[#F97316]', hasGlasses);
+            glassesBtn.classList.toggle('bg-orange-500', hasGlasses);
           }
         });
       }
@@ -384,19 +384,19 @@ document.addEventListener('DOMContentLoaded', () => {
     state.activePresetTab = tab;
     if (tab === 'phrases') {
       if (elements.presetTabPhrases) {
-        elements.presetTabPhrases.className = "px-2.5 py-1 rounded-lg font-bold text-xs bg-white text-[#1B1F5E] shadow-2xs transition-all flex items-center gap-1.5";
+        elements.presetTabPhrases.className = "px-2.5 py-1 rounded-lg font-bold text-xs bg-white text-indigo-950 shadow-2xs transition-all flex items-center gap-1.5";
       }
       if (elements.presetTabAlphabet) {
-        elements.presetTabAlphabet.className = "px-2.5 py-1 rounded-lg font-bold text-xs text-gray-600 hover:text-[#1B1F5E] transition-all flex items-center gap-1.5";
+        elements.presetTabAlphabet.className = "px-2.5 py-1 rounded-lg font-bold text-xs text-gray-600 hover:text-indigo-950 transition-all flex items-center gap-1.5";
       }
       if (elements.presetChipsContainer) elements.presetChipsContainer.classList.remove('hidden');
       if (elements.alphabetChipsContainer) elements.alphabetChipsContainer.classList.add('hidden');
     } else {
       if (elements.presetTabPhrases) {
-        elements.presetTabPhrases.className = "px-2.5 py-1 rounded-lg font-bold text-xs text-gray-600 hover:text-[#1B1F5E] transition-all flex items-center gap-1.5";
+        elements.presetTabPhrases.className = "px-2.5 py-1 rounded-lg font-bold text-xs text-gray-600 hover:text-indigo-950 transition-all flex items-center gap-1.5";
       }
       if (elements.presetTabAlphabet) {
-        elements.presetTabAlphabet.className = "px-2.5 py-1 rounded-lg font-bold text-xs bg-white text-[#1B1F5E] shadow-2xs transition-all flex items-center gap-1.5";
+        elements.presetTabAlphabet.className = "px-2.5 py-1 rounded-lg font-bold text-xs bg-white text-indigo-950 shadow-2xs transition-all flex items-center gap-1.5";
       }
       if (elements.presetChipsContainer) elements.presetChipsContainer.classList.add('hidden');
       if (elements.alphabetChipsContainer) elements.alphabetChipsContainer.classList.remove('hidden');
@@ -425,8 +425,8 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.type = 'button';
       btn.className = `p-1.5 rounded-xl border text-center transition-all duration-150 flex flex-col items-center justify-center group ${
         isSelected
-          ? 'bg-[#1B1F5E] text-white border-[#1B1F5E] shadow-sm scale-105 ring-2 ring-[#F97316]'
-          : 'bg-white/90 hover:bg-indigo-50 text-[#1B1F5E] border-gray-200 hover:border-indigo-700/40'
+          ? 'bg-indigo-950 text-white border-indigo-950 shadow-sm scale-105 ring-2 ring-orange-500'
+          : 'bg-white/90 hover:bg-indigo-50 text-indigo-950 border-gray-200 hover:border-indigo-700/40'
       }`;
 
       const lData = (alpha.languages && alpha.languages[langKey]) ? alpha.languages[langKey] : null;
@@ -436,8 +436,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const fontClass = isSanthali ? 'font-olchiki' : 'font-indic';
 
       btn.innerHTML = `
-        <span class="text-xs font-black tracking-tight ${isSelected ? 'text-orange-300' : 'text-[#1B1F5E] group-hover:text-[#F97316]'}">${alpha.letter}</span>
-        <span class="text-sm font-bold ${fontClass} ${isSelected ? 'text-white' : 'text-[#F97316]'} mt-0.5">${displayChar}</span>
+        <span class="text-xs font-black tracking-tight ${isSelected ? 'text-orange-300' : 'text-indigo-950 group-hover:text-orange-500'}">${alpha.letter}</span>
+        <span class="text-sm font-bold ${fontClass} ${isSelected ? 'text-white' : 'text-orange-500'} mt-0.5">${displayChar}</span>
       `;
 
       btn.title = `English: ${alpha.letter} ➔ ${langName}: ${displayChar} (${charName || '—'}) [${soundEng}]`;
@@ -492,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isActive = (state.selectedLanguage === item.key);
         pill.className = `px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
           isActive
-            ? 'bg-[#1B1F5E] text-white shadow-2xs'
+            ? 'bg-indigo-950 text-white shadow-2xs'
             : 'bg-white text-gray-700 hover:bg-indigo-50 border border-gray-200'
         }`;
         pill.textContent = item.label;
@@ -548,12 +548,12 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.className = "hover:bg-orange-50/50 transition-colors";
       tr.innerHTML = `
         <td class="py-3 px-3">
-          <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#FFF3EB] border border-[#F97316]/30 text-sm font-black text-[#F97316]">
+          <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#FFF3EB] border border-orange-500/30 text-sm font-black text-orange-500">
             ${a.letter}
           </div>
         </td>
         <td class="py-3 px-3">
-          <span class="text-2xl font-bold ${fontClass} text-[#1B1F5E]">
+          <span class="text-2xl font-bold ${fontClass} text-indigo-950">
             ${displayChar}
           </span>
         </td>
@@ -572,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button type="button" class="alphabet-table-speak-btn p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors cursor-pointer" title="Pronounce sound">
               <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
             </button>
-            <button type="button" class="alphabet-table-use-btn px-3 py-1.5 rounded-lg bg-[#1B1F5E] hover:bg-[#2A2F7E] text-white text-[11px] font-bold shadow-2xs transition-all flex items-center gap-1 cursor-pointer">
+            <button type="button" class="alphabet-table-use-btn px-3 py-1.5 rounded-lg bg-indigo-950 hover:bg-[#2A2F7E] text-white text-[11px] font-bold shadow-2xs transition-all flex items-center gap-1 cursor-pointer">
               <span>Display</span>
               <i data-lucide="arrow-right" class="w-3 h-3 text-orange-300"></i>
             </button>
@@ -622,11 +622,11 @@ document.addEventListener('DOMContentLoaded', () => {
       chip.type = 'button';
       chip.className = `text-xs px-3 py-2 rounded-xl text-left border transition-all duration-200 flex items-center space-x-2 ${
         isSelected
-          ? 'bg-[#1B1F5E] text-white border-[#1B1F5E] shadow-sm'
-          : 'bg-white/80 hover:bg-indigo-50 text-[#1B1F5E] border-indigo-900/15'
+          ? 'bg-indigo-950 text-white border-indigo-950 shadow-sm'
+          : 'bg-white/80 hover:bg-indigo-50 text-indigo-950 border-indigo-900/15'
       }`;
       chip.innerHTML = `
-        <span class="w-2 h-2 rounded-full ${isSelected ? 'bg-[#F97316]' : 'bg-indigo-700/40'}"></span>
+        <span class="w-2 h-2 rounded-full ${isSelected ? 'bg-orange-500' : 'bg-indigo-700/40'}"></span>
         <span class="truncate font-medium">${phrase.english}</span>
       `;
       chip.addEventListener('click', () => {
@@ -649,19 +649,19 @@ document.addEventListener('DOMContentLoaded', () => {
     PALASH_CORPUS.studentResponses.forEach((resp) => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `p-3 rounded-2xl border text-left transition-all duration-200 shadow-sm hover:shadow-md transform active:scale-95 bg-white border-indigo-900/10 hover:border-[#F97316] group relative overflow-hidden`;
+      btn.className = `p-3 rounded-2xl border text-left transition-all duration-200 shadow-sm hover:shadow-md transform active:scale-95 bg-white border-indigo-900/10 hover:border-orange-500 group relative overflow-hidden`;
 
       const dialectText = resp[state.selectedLanguage] || resp.santhali;
 
       btn.innerHTML = `
         <div class="flex items-start space-x-3">
-          <div class="w-9 h-9 rounded-xl bg-[#FFF3EB] group-hover:bg-[#F97316] text-[#F97316] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+          <div class="w-9 h-9 rounded-xl bg-[#FFF3EB] group-hover:bg-orange-500 text-orange-500 group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
             </svg>
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-xs font-semibold text-[#1B1F5E] group-hover:text-[#F97316] truncate">
+            <div class="text-xs font-semibold text-indigo-950 group-hover:text-orange-500 truncate">
               ${resp.englishMeaning}
             </div>
             <div class="text-[11px] text-gray-500 font-olchiki truncate mt-0.5">
@@ -707,11 +707,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const alertCard = document.createElement('div');
-    alertCard.className = `p-3.5 rounded-2xl border border-[#F97316]/30 bg-[#FFF3EB] shadow-sm transition-all duration-300 transform translate-y-[-8px] opacity-0 animate-slide-down incoming-alert`;
+    alertCard.className = `p-3.5 rounded-2xl border border-orange-500/30 bg-[#FFF3EB] shadow-sm transition-all duration-300 transform translate-y-[-8px] opacity-0 animate-slide-down incoming-alert`;
 
     alertCard.innerHTML = `
       <div class="flex items-center justify-between mb-1.5">
-        <span class="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#F97316] text-white">
+        <span class="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-orange-500 text-white">
           <svg class="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -719,7 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </span>
         <span class="text-[10px] text-gray-500">${item.timestamp}</span>
       </div>
-      <div class="text-xs font-semibold text-[#1B1F5E] mb-1">
+      <div class="text-xs font-semibold text-indigo-950 mb-1">
         Translation: "${item.hindiMeaning}" (${item.englishMeaning})
       </div>
       <div class="text-[11px] text-[#9A3412] font-olchiki bg-white/70 px-2 py-1 rounded-lg border border-orange-200">
@@ -900,9 +900,9 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.classroomNativeScript.textContent = displayText;
 
         if (langKey === 'santhali') {
-          elements.classroomNativeScript.className = "text-2xl md:text-4xl font-extrabold text-[#1B1F5E] tracking-wide font-olchiki leading-relaxed";
+          elements.classroomNativeScript.className = "text-2xl md:text-4xl font-extrabold text-indigo-950 tracking-wide font-olchiki leading-relaxed";
         } else {
-          elements.classroomNativeScript.className = "text-2xl md:text-3xl font-extrabold text-[#1B1F5E] tracking-wide font-indic leading-relaxed";
+          elements.classroomNativeScript.className = "text-2xl md:text-3xl font-extrabold text-indigo-950 tracking-wide font-indic leading-relaxed";
         }
       }
     }
@@ -938,9 +938,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Animate speaker button
     if (elements.classroomSpeakerBtn) {
-      elements.classroomSpeakerBtn.classList.add('scale-110', 'ring-4', 'ring-[#F97316]');
+      elements.classroomSpeakerBtn.classList.add('scale-110', 'ring-4', 'ring-orange-500');
       setTimeout(() => {
-        elements.classroomSpeakerBtn.classList.remove('scale-110', 'ring-4', 'ring-[#F97316]');
+        elements.classroomSpeakerBtn.classList.remove('scale-110', 'ring-4', 'ring-orange-500');
       }, 500);
     }
 
@@ -1018,9 +1018,9 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.languageTabs.forEach(t => {
       const tLang = t.getAttribute('data-lang');
       const isCurrent = (tLang === lang);
-      t.classList.remove('bg-[#1B1F5E]', 'text-white', 'shadow-sm', 'bg-white/70', 'text-gray-700', 'hover:bg-indigo-50', 'ring-2', 'ring-orange-500', 'bg-orange-100', 'bg-orange-50/60', 'text-orange-800');
+      t.classList.remove('bg-indigo-950', 'text-white', 'shadow-sm', 'bg-white/70', 'text-gray-700', 'hover:bg-indigo-50', 'ring-2', 'ring-orange-500', 'bg-orange-100', 'bg-orange-50/60', 'text-orange-800');
       if (isCurrent) {
-        t.classList.add('bg-[#1B1F5E]', 'text-white', 'shadow-sm');
+        t.classList.add('bg-indigo-950', 'text-white', 'shadow-sm');
       } else {
         t.classList.add('bg-white/70', 'text-gray-700', 'hover:bg-indigo-50');
       }
@@ -1380,7 +1380,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.className = `fade-scale-in p-3.5 rounded-2xl border ${isHigh ? 'border-indigo-200 bg-indigo-50/50' : 'border-orange-200 bg-orange-50/40'}`;
       card.style.animationDelay = `${Math.min(idx * 0.02, 0.4)}s`;
       card.innerHTML = `
-        <div class="text-xs font-semibold text-[#1B1F5E]">${idx + 1}. ${escapeHtml(r.source)}</div>
+        <div class="text-xs font-semibold text-indigo-950">${idx + 1}. ${escapeHtml(r.source)}</div>
         <div class="text-sm font-bold ${isHigh ? 'text-indigo-800' : 'text-orange-800'} font-indic mt-1">${escapeHtml(r.nativeScript)}</div>
         <div class="flex items-center justify-between mt-1.5">
           <span class="text-[10px] font-medium ${isHigh ? 'text-indigo-700' : 'text-orange-700'}">${r.verificationTag} · ${r.confidence}%</span>
@@ -1451,4 +1451,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // Start app
   init();
 });
+
 
