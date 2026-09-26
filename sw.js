@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bhashasetu-cache-v1';
+const CACHE_NAME = 'ARTHA-cache-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
