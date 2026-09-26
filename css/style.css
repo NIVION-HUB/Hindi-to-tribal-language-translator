@@ -1,20 +1,38 @@
-﻿/* Fonts are now self-hosted locally -- see css/fonts-local.css (linked separately in index.html) */
+/* ============================================================
+   BHASHA SETU — Redesigned Stylesheet (Palabra.ai-inspired)
+   Premium modern design with gradient hero, glassmorphism,
+   animated interactions, and rich visual hierarchy
+   ============================================================ */
+
+/* Google Fonts fallback — already self-hosted in fonts-local.css */
 
 :root {
-  --bg-cream: #FAFAFA;
-  --bg-cream-dark: #F5EFEB;
+  /* Core Palette */
+  --bg-cream: #F0F4F8;
+  --bg-cream-dark: #E2E8F0;
+  --bg-hero-start: #3B3FCC;
+  --bg-hero-mid: #5B4FD6;
+  --bg-hero-end: #8B5CF6;
   --forest-green: #1B1F5E;
   --forest-green-light: #2A2F7E;
   --forest-green-dark: #12241D;
   --warm-saffron: #F97316;
-  --warm-saffron-light: #F9803C;
-  --warm-saffron-soft: #FFF3EB;
+  --warm-saffron-light: #FB923C;
+  --warm-saffron-soft: #FFF7ED;
   --tribal-ochre: #C07D38;
   --tribal-earth: #9A3412;
-  --text-primary: #1A2421;
-  --text-secondary: #52635B;
-  --card-border: rgba(30, 58, 47, 0.12);
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --card-border: rgba(30, 58, 138, 0.08);
   --glass-bg: rgba(255, 255, 255, 0.85);
+  --accent-blue: #3B82F6;
+  --accent-indigo: #6366F1;
+  --surface-light: #F8FAFC;
+}
+
+/* Base Reset & Typography */
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -25,6 +43,8 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Ol Chiki & Indic Script Typography Enhancement */
@@ -36,55 +56,105 @@ body {
   font-family: 'Noto Sans', 'Inter', sans-serif;
 }
 
-/* Jharkhand Tribal Sohrai & Khovar Geometric Border */
-.tribal-border-top {
-  background-image: radial-gradient(#F97316 15%, transparent 16%),
-                    radial-gradient(#1B1F5E 15%, transparent 16%);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
-}
-
+/* ========================================
+   TRIBAL PATTERN STRIPE — Refined
+   ======================================== */
 .tribal-pattern-stripe {
-  background: repeating-linear-gradient(
-    45deg,
-    #1B1F5E,
-    #1B1F5E 8px,
-    #F97316 8px,
-    #F97316 16px,
-    #FAFAFA 16px,
-    #FAFAFA 24px
+  background: linear-gradient(
+    90deg,
+    #3B3FCC 0%,
+    #5B4FD6 25%,
+    #F97316 50%,
+    #5B4FD6 75%,
+    #3B3FCC 100%
   );
+  background-size: 200% 100%;
+  animation: stripe-shimmer 4s ease-in-out infinite;
 }
 
-/* Glassmorphic Panel Styles */
+@keyframes stripe-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ========================================
+   GLASSMORPHIC PANELS
+   ======================================== */
 .glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border);
-  box-shadow: 0 10px 30px -5px rgba(30, 58, 47, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 10px 40px -10px rgba(15, 23, 42, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+}
+
+.glass-panel:hover {
+  box-shadow:
+    0 20px 60px -15px rgba(15, 23, 42, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .glass-panel-dark {
-  background: rgba(30, 58, 47, 0.95);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #FAFAFA;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F8FAFC;
 }
 
-/* Microphone Pulsing Effect */
+/* ========================================
+   CUSTOM SCROLLBARS — Sleek
+   ======================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.4);
+}
+
+/* ========================================
+   SELECTION HIGHLIGHT
+   ======================================== */
+::selection {
+  background-color: #6366F1 !important;
+  color: #ffffff !important;
+}
+::-moz-selection {
+  background-color: #6366F1 !important;
+  color: #ffffff !important;
+}
+
+/* ========================================
+   MICROPHONE PULSING EFFECT
+   ======================================== */
 @keyframes mic-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(226, 109, 40, 0.7);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.6);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 0 24px rgba(226, 109, 40, 0);
-    transform: scale(1.04);
+    box-shadow: 0 0 0 24px rgba(249, 115, 22, 0);
+    transform: scale(1.05);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(226, 109, 40, 0);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
     transform: scale(1);
   }
 }
@@ -94,14 +164,12 @@ body {
   background-color: var(--warm-saffron) !important;
 }
 
-/* Wave Bar Animation for Sound Waves */
+/* ========================================
+   WAVE BAR ANIMATION
+   ======================================== */
 @keyframes wave-bar {
-  0%, 100% {
-    height: 8px;
-  }
-  50% {
-    height: 38px;
-  }
+  0%, 100% { height: 8px; }
+  50% { height: 38px; }
 }
 
 .wave-bar {
@@ -117,72 +185,47 @@ body {
 .wave-bar:nth-child(8) { animation-delay: 0.2s; }
 .wave-bar:nth-child(9) { animation-delay: 0.5s; }
 
-/* Dynamic Visual Flashcard Custom Aesthetics */
+/* ========================================
+   FLASHCARD STAGE
+   ======================================== */
 .flashcard-stage {
   perspective: 1000px;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .flashcard-stage:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15);
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.03);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(30, 58, 47, 0.2);
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(30, 58, 47, 0.4);
-}
-
-/* Offline Banner slide */
+/* ========================================
+   OFFLINE BANNER SLIDE
+   ======================================== */
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-slide-down {
-  animation: slideDown 0.3s ease-out forwards;
+  animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Sound Ripple on Student Click */
+/* ========================================
+   ALERTS & BADGES
+   ======================================== */
 @keyframes student-ping {
-  0% {
-    transform: scale(0.95);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.08);
-    opacity: 0;
-  }
+  0% { transform: scale(0.95); opacity: 1; }
+  100% { transform: scale(1.08); opacity: 0; }
 }
 
-/* Teacher Incoming Alert Badge */
 @keyframes alert-glow {
   0%, 100% {
     border-color: #F97316;
-    box-shadow: 0 0 0 0 rgba(226, 109, 40, 0.4);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
   }
   50% {
-    border-color: #1B1F5E;
-    box-shadow: 0 0 0 10px rgba(30, 58, 47, 0.15);
+    border-color: #6366F1;
+    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0.1);
   }
 }
 
@@ -190,46 +233,54 @@ body {
   animation: alert-glow 1.8s infinite;
 }
 
-/* Mode Switcher Tabs (Live Classroom / PDF Translator) */
+/* ========================================
+   MODE SWITCHER TABS (Pill in track)
+   ======================================== */
 .mode-tab-btn {
-  background: rgba(255, 255, 255, 0.7);
-  color: var(--text-secondary);
-  border: 1px solid var(--card-border);
+  background: transparent;
+  color: #64748B; /* slate-500 */
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .mode-tab-btn:hover {
-  background: #EEF2FF;
-  color: var(--forest-green);
+  color: #0F172A; /* slate-900 */
 }
 .mode-tab-btn.active {
-  background: var(--forest-green);
-  color: #fff;
-  border-color: var(--forest-green);
-  box-shadow: 0 4px 14px -2px rgba(30, 58, 47, 0.35);
+  background: #ffffff;
+  color: #0F172A;
+  border-color: rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.08);
 }
 
-/* Real-data verified badge: gentle glowing shimmer -- earns its glow honestly */
+/* ========================================
+   REAL-DATA VERIFIED BADGE
+   ======================================== */
 @keyframes real-data-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35); }
-  50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.3); }
+  50% { box-shadow: 0 0 0 6px rgba(99, 102, 241, 0); }
 }
 .real-data-badge {
   animation: real-data-glow 2.4s infinite;
 }
 
-/* Fade-scale entrance for switched panels / results */
+/* ========================================
+   FADE-SCALE ENTRANCE
+   ======================================== */
 @keyframes fadeScaleIn {
-  from { opacity: 0; transform: translateY(6px) scale(0.99); }
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .fade-scale-in {
-  animation: fadeScaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fadeScaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Confidence meter bar */
+/* ========================================
+   CONFIDENCE METER BAR
+   ======================================== */
 .confidence-meter-track {
   height: 6px;
   border-radius: 9999px;
-  background: rgba(30, 58, 47, 0.08);
+  background: rgba(99, 102, 241, 0.1);
   overflow: hidden;
 }
 .confidence-meter-fill {
@@ -238,7 +289,9 @@ body {
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
 }
 
-/* Confetti burst (Well Done / high-confidence celebration) */
+/* ========================================
+   CONFETTI BURST
+   ======================================== */
 .confetti-piece {
   position: absolute;
   top: -10px;
@@ -253,91 +306,89 @@ body {
   100% { transform: translateY(160px) rotate(540deg); opacity: 0; }
 }
 
-/* PDF drop zone active state */
+/* ========================================
+   PDF DROP ZONE
+   ======================================== */
 #pdfDropZone.drag-active {
   border-color: var(--warm-saffron);
   background: var(--warm-saffron-soft);
 }
 
-/* Gentle animated gradient on the logo emblem */
+/* ========================================
+   LOGO EMBLEM
+   ======================================== */
 @keyframes logo-shimmer {
-  0%, 100% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(8deg); }
+  0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(10deg) brightness(1.05); }
 }
 .logo-emblem-anim {
-  animation: logo-shimmer 5s ease-in-out infinite;
+  animation: logo-shimmer 4s ease-in-out infinite;
 }
 
-/* ===================== Overview / Landing Page ===================== */
-.hero-pattern {
-  background-image:
-    radial-gradient(circle at 20% 20%, #fff 1.5px, transparent 1.5px),
-    radial-gradient(circle at 60% 60%, #fff 1.5px, transparent 1.5px);
-  background-size: 60px 60px, 90px 90px;
-}
 
-.stat-card {
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.stat-card:hover {
-  transform: translateY(-3px);
-}
+/* ========================================================
+   HERO SECTION — Palabra.ai-Inspired Gradient
+   ======================================================== */
 
-.lang-status-card {
-  border-width: 1.5px;
-  border-radius: 1.25rem;
-  padding: 1.25rem;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
-}
-.lang-status-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(30, 58, 47, 0.15);
-}
-.lang-status-pill {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  padding: 3px 10px;
-  border-radius: 9999px;
-}
-
-.how-step {
-  background: #fff;
-  border: 1px solid rgba(30, 58, 47, 0.08);
-  border-radius: 1.25rem;
-  padding: 1.5rem;
-}
-.how-step-num {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 9999px;
-  background: #1B1F5E;
+.hero-3d-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4338CA 0%, #6366F1 30%, #818CF8 60%, #A78BFA 100%);
   color: #fff;
-  font-weight: 800;
-  font-size: 0.875rem;
+  padding: 5rem 2rem 6rem;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.overview-cta-primary:hover,
-.overview-cta-secondary:hover {
-  filter: brightness(1.05);
+/* Animated floating orbs in hero */
+.hero-3d-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, transparent 70%);
+  filter: blur(60px);
+  animation: float-orb-1 8s ease-in-out infinite;
+  pointer-events: none;
 }
 
-/* ========================================================= */
-/* 3D ANIMATED AVATAR & HERO GRID LAYOUT STYLES             */
-/* ========================================================= */
+.hero-3d-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: -15%;
+  left: -5%;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+  filter: blur(50px);
+  animation: float-orb-2 10s ease-in-out infinite;
+  pointer-events: none;
+}
 
-.hero-3d-wrapper {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #1B1F5E 0%, #204a3a 50%, #2A2F7E 100%);
-  color: #fff;
-  padding: 3.5rem 1.5rem 4rem;
-  width: 100%;
-  box-sizing: border-box;
+@keyframes float-orb-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, 40px) scale(1.1); }
+  66% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+@keyframes float-orb-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.15); }
+}
+
+.hero-pattern {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px, 80px 80px;
 }
 
 .hero-3d-container {
@@ -385,114 +436,133 @@ body {
   min-width: 0;
 }
 
+/* ========================================
+   HERO BADGE — Glassmorphic Pill
+   ======================================== */
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 1.15rem;
+  gap: 0.55rem;
+  padding: 0.55rem 1.25rem;
   border-radius: 9999px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(8px);
-  margin-bottom: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  margin-bottom: 1.5rem;
   white-space: nowrap;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.01em;
+  animation: fadeScaleIn 0.6s 0.2s both;
 }
 
+/* ========================================
+   HERO TITLE — Big & Bold Centered
+   ======================================== */
 .hero-title {
-  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
   color: #fff;
-  margin: 0 0 0.85rem 0;
+  margin: 0 0 1rem 0;
+  animation: fadeScaleIn 0.6s 0.3s both;
 }
 
 .hero-subtitle {
-  font-size: clamp(1.1rem, 2vw, 1.45rem);
-  font-weight: 700;
-  color: #A7F3D0;
-  margin: 0 0 1.25rem 0;
-  line-height: 1.35;
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.4;
+  animation: fadeScaleIn 0.6s 0.4s both;
 }
 
 .hero-desc {
-  font-size: 0.925rem;
-  line-height: 1.7;
-  color: rgba(236, 253, 245, 0.92);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.75);
   max-width: 640px;
-  margin: 0 0 2rem 0;
+  margin: 0 0 2.5rem 0;
+  animation: fadeScaleIn 0.6s 0.5s both;
 }
 
+/* ========================================
+   HERO BUTTONS — Palabra-style CTAs
+   ======================================== */
 .hero-btn-group {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 2.25rem;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
   width: 100%;
+  animation: fadeScaleIn 0.6s 0.6s both;
 }
 
 .hero-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.35rem;
-  border-radius: 1rem;
-  font-size: 0.825rem;
+  gap: 0.55rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
   text-decoration: none;
   box-sizing: border-box;
-  height: 46px;
+  height: auto;
 }
 
 .hero-btn-primary {
   background: #F97316;
   color: #fff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
   border: none;
 }
 .hero-btn-primary:hover {
   background: #EA580C;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(226, 109, 40, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(249, 115, 22, 0.45);
 }
 
 .hero-btn-secondary {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
 }
 .hero-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
 }
 
 .hero-btn-avatar {
-  background: rgba(16, 185, 129, 0.18);
-  color: #D1FAE5;
-  border: 1px solid rgba(52, 211, 153, 0.35);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
 }
 .hero-btn-avatar:hover {
-  background: rgba(16, 185, 129, 0.32);
-  border-color: rgba(52, 211, 153, 0.6);
-  transform: translateY(-2px);
+  background: rgba(249, 115, 22, 0.3);
+  border-color: rgba(249, 115, 22, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
 }
 
+/* ========================================
+   HERO DIVIDER & STATS
+   ======================================== */
 .hero-divider {
   width: 100%;
   height: 1px;
   background: rgba(255, 255, 255, 0.15);
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1.75rem 0;
   border: none;
 }
 
@@ -501,6 +571,7 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem 1.5rem;
   width: 100%;
+  animation: fadeScaleIn 0.6s 0.7s both;
 }
 @media (min-width: 640px) {
   .hero-stats-grid {
@@ -513,27 +584,33 @@ body {
 .hero-stat-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.78rem;
+  gap: 0.55rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: rgba(209, 250, 229, 0.95);
+  color: rgba(255, 255, 255, 0.8);
   white-space: nowrap;
 }
 
+/* ========================================
+   3D AVATAR STAGE — Refined Glass Card
+   ======================================== */
 .avatar-3d-stage {
   position: relative;
   width: 100%;
   max-width: 460px;
   height: 520px;
   border-radius: 2rem;
-  background: radial-gradient(circle at 50% 25%, rgba(226, 109, 40, 0.22) 0%, rgba(30, 58, 47, 0.5) 50%, rgba(14, 30, 24, 0.95) 100%);
-  border: 1.5px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: rgba(15, 23, 42, 0.6);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   overflow: hidden;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   padding: 1.25rem;
+  animation: fadeScaleIn 0.8s 0.4s both;
 }
 
 #heroAvatarStage {
@@ -550,12 +627,12 @@ body {
   left: 1.25rem;
   right: 1.25rem;
   z-index: 30;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
-  border: 1.5px solid rgba(226, 109, 40, 0.4);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(99, 102, 241, 0.3);
   border-radius: 1.25rem;
   padding: 0.85rem 1.15rem;
-  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.2);
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -566,39 +643,139 @@ body {
   left: 3rem;
   width: 14px;
   height: 14px;
-  background: rgba(255, 255, 255, 0.94);
-  border-right: 1.5px solid rgba(226, 109, 40, 0.4);
-  border-bottom: 1.5px solid rgba(226, 109, 40, 0.4);
+  background: rgba(255, 255, 255, 0.96);
+  border-right: 1.5px solid rgba(99, 102, 241, 0.3);
+  border-bottom: 1.5px solid rgba(99, 102, 241, 0.3);
   transform: rotate(45deg);
 }
 
+/* ========================================
+   AVATAR CHIP BUTTONS
+   ======================================== */
 .avatar-chip-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
+  padding: 0.45rem 0.9rem;
   font-size: 0.72rem;
   font-weight: 700;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   user-select: none;
 }
 .avatar-chip-btn:hover {
-  background: rgba(226, 109, 40, 0.85);
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-1.5px);
-  box-shadow: 0 4px 12px rgba(226, 109, 40, 0.4);
+  background: rgba(249, 115, 22, 0.8);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
 }
 .avatar-chip-btn:active {
   transform: scale(0.95);
 }
 
-/* Floating 3D Co-Teacher Companion Dock */
+
+/* ========================================================
+   OVERVIEW / LANDING PAGE — Stats, Cards, How-It-Works
+   ======================================================== */
+
+/* ========================================
+   STAT CARDS — Animated Counters
+   ======================================== */
+.stat-card {
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: white;
+  border: 1px solid rgba(99, 102, 241, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -8px rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.15);
+}
+
+/* ========================================
+   LANGUAGE STATUS CARDS
+   ======================================== */
+.lang-status-card {
+  border-width: 1.5px;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: white;
+}
+.lang-status-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.12);
+}
+.lang-status-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+
+/* ========================================
+   HOW IT WORKS STEPS
+   ======================================== */
+.how-step {
+  background: white;
+  border: 1px solid rgba(99, 102, 241, 0.08);
+  border-radius: 1.5rem;
+  padding: 2rem 1.75rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.how-step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #6366F1, #F97316);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.how-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -10px rgba(99, 102, 241, 0.12);
+}
+.how-step:hover::before {
+  opacity: 1;
+}
+
+.how-step-num {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #4338CA, #6366F1);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.overview-cta-primary:hover,
+.overview-cta-secondary:hover {
+  filter: brightness(1.05);
+}
+
+
+/* ========================================
+   FLOATING 3D COMPANION DOCK
+   ======================================== */
 .floating-companion-dock {
   position: fixed;
   bottom: 1.5rem;
@@ -606,34 +783,42 @@ body {
   z-index: 50;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  background: rgba(30, 58, 47, 0.92);
-  backdrop-filter: blur(16px);
-  border: 1.5px solid rgba(226, 109, 40, 0.5);
+  gap: 0.7rem;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(99, 102, 241, 0.4);
   color: #fff;
-  padding: 0.5rem 1rem 0.5rem 0.6rem;
+  padding: 0.6rem 1.1rem 0.6rem 0.7rem;
   border-radius: 9999px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35), 0 0 15px rgba(226, 109, 40, 0.25);
+  box-shadow:
+    0 12px 30px -5px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(99, 102, 241, 0.2);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .floating-companion-dock:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.45), 0 0 25px rgba(226, 109, 40, 0.45);
-  border-color: #F97316;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 18px 40px -5px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(99, 102, 241, 0.35);
+  border-color: #6366F1;
 }
 
-/* 3D Perspective Card Tilt */
+/* ========================================
+   3D PERSPECTIVE CARDS
+   ======================================== */
 .tilt-card-3d {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
   transform-style: preserve-3d;
 }
 .tilt-card-3d:hover {
-  transform: perspective(1000px) translateY(-4px) rotateX(2deg);
-  box-shadow: 0 20px 35px -10px rgba(30, 58, 47, 0.12);
+  transform: perspective(1000px) translateY(-5px) rotateX(2deg);
+  box-shadow: 0 24px 44px -12px rgba(99, 102, 241, 0.12);
 }
 
-/* Shimmering Halo animation */
+/* ========================================
+   HALO GLOW ANIMATION
+   ======================================== */
 @keyframes halo-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -642,25 +827,153 @@ body {
   animation: halo-spin 24s linear infinite;
 }
 
+/* ========================================
+   SCROLL REVEAL ANIMATIONS
+   ======================================== */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  animation: revealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.3s; }
+.reveal-delay-4 { animation-delay: 0.4s; }
+
+/* ========================================
+   INTERACTIVE DEMO SECTION (New)
+   ======================================== */
+.demo-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 2rem;
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  padding: 2.5rem;
+  box-shadow:
+    0 20px 50px -15px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.demo-container:hover {
+  box-shadow:
+    0 30px 60px -15px rgba(15, 23, 42, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ========================================
+   USE CASE CARDS (Palabra-inspired)
+   ======================================== */
+.use-case-card {
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(99, 102, 241, 0.08);
+  background: white;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.use-case-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.15);
+}
+.use-case-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.use-case-card:hover img {
+  transform: scale(1.03);
+}
+
+/* ========================================
+   FEATURE GRID CARDS
+   ======================================== */
+.feature-grid-card {
+  background: var(--surface-light);
+  border: 1px solid rgba(99, 102, 241, 0.06);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.feature-grid-card:hover {
+  background: white;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -8px rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.15);
+}
+
+.feature-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* ========================================
+   GRADIENT BADGE
+   ======================================== */
+.gradient-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(249, 115, 22, 0.1));
+  color: #4338CA;
+  border: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+/* ========================================
+   FOOTER SECTION
+   ======================================== */
+.footer-section {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4rem 2rem;
+}
+
+.footer-section a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer-section a:hover {
+  color: #F97316;
+}
 
 
-
-/* ===== FIX FOR ARBITRARY TAILWIND HEX CLASSES ===== */
+/* ========================================================
+   ARBITRARY TAILWIND HEX FALLBACKS
+   ======================================================== */
 .bg-\[\#1B1F5E\] { background-color: #1B1F5E !important; }
 .text-\[\#1B1F5E\] { color: #1B1F5E !important; }
 .border-\[\#1B1F5E\] { border-color: #1B1F5E !important; }
 
-/* Opacity variants for 1B1F5E (27, 31, 94) */
 .bg-\[\#1B1F5E\]\/10 { background-color: rgba(27, 31, 94, 0.1) !important; }
 .border-\[\#1B1F5E\]\/10 { border-color: rgba(27, 31, 94, 0.1) !important; }
 .border-\[\#1B1F5E\]\/15 { border-color: rgba(27, 31, 94, 0.15) !important; }
 .border-\[\#1B1F5E\]\/20 { border-color: rgba(27, 31, 94, 0.2) !important; }
 
-/* Gradients */
 .from-\[\#1B1F5E\] { --tw-gradient-from: #1B1F5E var(--tw-gradient-from-position); --tw-gradient-to: rgba(27, 31, 94, 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
 .to-\[\#2A2F7E\] { --tw-gradient-to: #2A2F7E var(--tw-gradient-to-position) !important; }
 
-/* Orange Accents */
 .text-\[\#F97316\] { color: #F97316 !important; }
 .bg-\[\#F97316\] { background-color: #F97316 !important; }
 .border-\[\#F97316\] { border-color: #F97316 !important; }
@@ -668,13 +981,3 @@ body {
 .hover\:border-\[\#F97316\]:hover { border-color: #F97316 !important; }
 
 .text-\[\#EA580C\] { color: #EA580C !important; }
-
-/* ===== TEXT SELECTION HIGHLIGHT ===== */
-::selection {
-    background-color: #F97316 !important; /* SIH Orange */
-    color: #ffffff !important;
-}
-::-moz-selection {
-    background-color: #F97316 !important;
-    color: #ffffff !important;
-}

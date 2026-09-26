@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Bhasha Setu (Language Bridge) - Problem Statement SIH26042
  * Multilingual Corpus aligned with Jharkhand PALASH Framework
  * Languages: Hindi (Teacher), Santhali (Ol Chiki), Ho (Warang Chiti/Devanagari), Mundari
@@ -39,7 +39,7 @@ const PALASH_CORPUS = {
         script: "Mundari Bani / Devanagari",
         region: "Ranchi, Khunti, Gumla, Simdega",
         isRealData: true,
-        dataSource: "17,809-sentence Hindi-Mundari corpus + PALASH Foundational Multilingual Lexicon"
+        dataSource: "35,618-sentence Hindi-Mundari corpus + PALASH Foundational Multilingual Lexicon"
       },
       kurukh: {
         name: "Kurukh",
@@ -840,3 +840,4 @@ const PALASH_CORPUS = {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = PALASH_CORPUS;
 }
+

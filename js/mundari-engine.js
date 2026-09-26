@@ -172,3 +172,31 @@ const MUNDARI_ENGINE = (function () {
 })();
 
 window.MUNDARI_ENGINE = MUNDARI_ENGINE;
+
+
+// === EXTENDED CORPUS INTEGRATION ===
+// Search the 17,809-pair Karya extended corpus for better translations
+(function() {
+  const originalTranslate = window.translateToMundari;
+  if (!originalTranslate) return;
+  
+  window.translateToMundari = function(hindiText) {
+    // First try the original engine
+    const result = originalTranslate(hindiText);
+    
+    // If confidence is low, also search the extended corpus
+    if (result && result.confidence < 70 && window.MUNDARI_CORPUS_EXTENDED) {
+      const cleanInput = hindiText.trim().toLowerCase();
+      for (let i = 0; i < window.MUNDARI_CORPUS_EXTENDED.length; i++) {
+        const pair = window.MUNDARI_CORPUS_EXTENDED[i];
+        if (pair.hi.toLowerCase() === cleanInput || pair.hi.toLowerCase().includes(cleanInput)) {
+          result.mundariText = pair.unr;
+          result.confidence = 92;
+          result.source = 'Karya Extended Corpus';
+          break;
+        }
+      }
+    }
+    return result;
+  };
+})();
