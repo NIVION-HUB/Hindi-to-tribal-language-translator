@@ -1,5 +1,5 @@
 /**
- * Bhasha Setu - 3D Interactive Animated AI Co-Teacher
+ * ARTHA - 3D Interactive Animated AI Co-Teacher
  * Native GLTF/Mixamo Animation Loader with Head Tracking
  * + Full app.js & speech.js compatibility layer
  */
@@ -136,7 +136,7 @@
     }
 
     init() { if (typeof this.onLoaded === 'function') this.onLoaded(); }
-    wave() { this._updateSpeechBubble('Johar! Namaskar! I am Aditi, your PALASH Language Co-Teacher. How can I help you today?'); }
+    wave() { this._updateSpeechBubble('Johar! Namaskar! I am ARTHA, your PALASH Language Co-Teacher. How can I help you today?'); }
     explain() { this._updateSpeechBubble('Notice how each tribal script maps phonetically to foundational sounds! Watch the display card closely.'); }
     cheer() { this._updateSpeechBubble('Excellent job! Marang bura! Keep practicing your native tribal words.'); }
     johar() { this._updateSpeechBubble('Johar! — Respectful greetings to all teachers and young learners of Jharkhand.'); }

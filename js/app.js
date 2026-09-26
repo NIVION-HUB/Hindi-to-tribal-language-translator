@@ -1,5 +1,5 @@
 ﻿/**
- * Bhasha Setu (Language Bridge) - Main Application Controller
+ * ARTHA (Language Bridge) - Main Application Controller
  * Handles dual-screen persona sync, live Hindi speech capture & translation,
  * flashcard rendering, student simulator, and offline mode under Jharkhand PALASH Framework.
  */
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (waveBtn) {
         waveBtn.addEventListener('click', () => {
           if (window.avatar3D) window.avatar3D.wave();
-          speechEngine.speak('Johar! Namaskar! I am Aditi, your PALASH Language Co-Teacher. How can I help you today?', 'en-IN');
+          speechEngine.speak('Johar! Namaskar! I am ARTHA, your PALASH Language Co-Teacher. How can I help you today?', 'en-IN');
         });
       }
 
@@ -358,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         talkBtn.addEventListener('click', () => {
           if (window.avatar3D) {
             window.avatar3D.wave();
-            const text = 'Johar! Welcome to Bhasha Setu. I am Aditi, your tribal education co-pilot. Let us bridge classroom languages!';
+            const text = 'Johar! Welcome to ARTHA. I am ARTHA, your tribal education co-pilot. Let us bridge classroom languages!';
             speechEngine.speak(text, 'en-IN');
           }
         });
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
         floatingDock.addEventListener('click', () => {
           if (window.avatar3D) {
             window.avatar3D.johar();
-            speechEngine.speak('Johar! Aditi here, ready to assist your tribal classroom session.', 'en-IN');
+            speechEngine.speak('Johar! ARTHA here, ready to assist your tribal classroom session.', 'en-IN');
           }
         });
       }

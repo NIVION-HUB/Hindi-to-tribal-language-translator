@@ -1,5 +1,5 @@
 ﻿/**
- * Bhasha Setu (Language Bridge) - Problem Statement SIH26042
+ * ARTHA (Language Bridge) - Problem Statement SIH26042
  * Multilingual Corpus aligned with Jharkhand PALASH Framework
  * Languages: Hindi (Teacher), Santhali (Ol Chiki), Ho (Warang Chiti/Devanagari), Mundari
  */

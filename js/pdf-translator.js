@@ -1,5 +1,5 @@
 /**
- * Bhasha Setu - PDF Translator (Hindi -> Mundari)
+ * ARTHA - PDF Translator (Hindi -> Mundari)
  * Client-side, fully offline once loaded:
  *   1. pdf.js extracts text from the uploaded Hindi PDF
  *   2. MUNDARI_ENGINE (real corpus + lexicon) translates each sentence
@@ -63,7 +63,7 @@ const PDF_TRANSLATOR = (function () {
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(30, 58, 47);
     doc.setFontSize(16);
-    doc.text('Bhasha Setu -- Hindi to Mundari (Real-Data Prototype)', marginX, y);
+    doc.text('ARTHA -- Hindi to Mundari (Real-Data Prototype)', marginX, y);
     y += 7;
 
     doc.setFont('helvetica', 'normal');

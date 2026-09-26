@@ -1,5 +1,5 @@
 ﻿/**
- * Bhasha Setu - Speech & Audio Synthesis Engine
+ * ARTHA - Speech & Audio Synthesis Engine
  * Fixed: async voice loading, tribal phonetic TTS, mic error handling
  */
 
@@ -367,7 +367,7 @@ class SpeechEngine {
     };
 
     utterance.onerror = (e) => {
-      console.warn('[Bhasha Setu] Tribal TTS utterance error:', e);
+      console.warn('[ARTHA] Tribal TTS utterance error:', e);
       window._activeSpeechUtterance = null;
       if (window.avatar3D && typeof window.avatar3D.stopSpeaking === 'function') {
         window.avatar3D.stopSpeaking();

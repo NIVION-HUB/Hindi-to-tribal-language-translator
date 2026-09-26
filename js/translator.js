@@ -1,5 +1,5 @@
 ﻿/**
- * Bhasha Setu - Live Multilingual Translation Engine
+ * ARTHA - Live Multilingual Translation Engine
  * Translates arbitrary English (and Hindi) speech & text into
  * Santhali (Ol Chiki), Ho (Warang Chiti / Devanagari), and Mundari
  * under the Jharkhand PALASH Framework.

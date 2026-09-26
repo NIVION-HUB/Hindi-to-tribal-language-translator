@@ -1,5 +1,5 @@
 /**
- * Bhasha Setu - REAL Mundari Translation Engine
+ * ARTHA - REAL Mundari Translation Engine
  * Ports the exact same two-tier strategy used in the verified Python
  * prototype: (1) sentence-level match against the real 17,809-pair
  * corpus, (2) statistical word-substitution fallback using the
